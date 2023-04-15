@@ -301,8 +301,7 @@ class GameLoop
 {
   public:
   GameLoop() {  }
-  // p1 turn -> attack/heal, check if p2 is alive if yes then p2 turn else p1 wins the game
-  // p2 turn -> attack/heal, check if p1 is alive if yes then p1 turn else p2 wins the game
+  // p1 turn -> attack/heal, check if p2 is alive if yes then p2 turn else p1 wins the game and same for p2
 
   // Function to check whether the player is alive
   bool isAlive(Player* pplayer) {
