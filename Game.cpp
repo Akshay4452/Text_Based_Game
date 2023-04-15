@@ -22,36 +22,24 @@ class Player
     player_name = _name;
   } 
 
-  virtual int GetHealth() {
+  int GetHealth() {
     // function to get current health of player
     return currentHealth;
   }
 
-  virtual int DoBaseDamage() {
+  int DoBaseDamage() {
     cout << player_name << " is now Attacking. Dealing damage of: "<<baseDamage<<" HP\n";
     return baseDamage;
   };
 
-  virtual int TotalDamage() {
-    // Encapsulating All damage functions inside another separate function so in the main() function we can call
-    // all damage functions at once
-    return DoBaseDamage() + DoAdditionalDamage();
-  }
-  
-  virtual void TotalHeal() {
-    // Encapsulating heal function. Here we dont want to define it but we will define 
-    // it in the child classes
-    Heal();
-  }; 
-
-  virtual void DisplayStats() {
+  void DisplayStats() {
     cout << "Here are the current stats of "<<player_name<<endl;
     cout<<"Current Health: "<<currentHealth<<endl;
     cout<<"Damaging Capacity: "<<baseDamage<<" HP\n";
     cout<<"Healing Capacity: "<<heal<<" HP\n";
   }
 
-  virtual void TakeDamage(int _damage) {
+  void TakeDamage(int _damage) {
     currentHealth -= _damage;
     if(currentHealth > 0) {
       cout <<player_name << " is taking damage of "<<_damage<<" HP\n";
@@ -61,7 +49,7 @@ class Player
     }
   }
 
-  virtual void Heal() {
+  void Heal() {
     if(currentHealth != maxHealth) { // Don't Heal if health of player is already full
       currentHealth += heal;
       if(currentHealth >= maxHealth) {
@@ -76,15 +64,25 @@ class Player
       cout << "You have wasted this round. "<<player_name<< "can't be healed again. Suck it up NOOOB\n";
     }
   }
+  // Virtual functions
+  virtual int TotalDamage() {
+    // Encapsulating All damage functions inside another separate function so in the main() function we can call
+    // all damage functions at once
+    return DoBaseDamage() + DoAdditionalDamage();
+  }
+  
+  virtual void TotalHeal() {
+    // Encapsulating heal function. Here we dont want to define it but we will define 
+    // it in the child classes
+    Heal();
+  };
 
   // Pure Virtual Functions  
   
   virtual int DoAdditionalDamage() = 0;
 
   // destructor
-  virtual ~Player() {
-    cout << "Player object is destroyed\n";
-  }
+  virtual ~Player() { }
 };
 
 class BrutePlayer : public Player
@@ -117,9 +115,7 @@ class BrutePlayer : public Player
     return additionalDamage;
   }
   
-  virtual ~BrutePlayer() {
-    cout << "Bruty is Destroyed\n";
-  }
+  virtual ~BrutePlayer() { }
 };
 
 class AgilePlayer : public Player
@@ -181,9 +177,7 @@ class AgilePlayer : public Player
     HealBoost(); // Healing boost with 20% probability
   }
 
-  virtual ~AgilePlayer() {
-    cout << "Agile is destroyed\n";
-  }
+  virtual ~AgilePlayer() {  }
 };
 
 class TacticalPlayer : public Player
@@ -231,9 +225,7 @@ class TacticalPlayer : public Player
   int TotalDamage() {
     return DoBaseDamage() + DoAdditionalDamage() + DeadShot();
   }
-  virtual ~TacticalPlayer() {
-    cout << "Tactical is destroyed\n";
-  }
+  virtual ~TacticalPlayer() { }
 };
 
 class GameManager
